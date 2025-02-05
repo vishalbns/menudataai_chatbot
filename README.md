@@ -141,6 +141,46 @@ To ensure factual consistency:
 2. Responses are generated based on retrieved facts rather than the LLM's general knowledge[1].
 3. When information is unavailable or uncertain, the system acknowledges this in the response[1].
 
+### Chat Monitoring and Logging
+
+The Chatbot also implements a background task system for logging chat interactions to a database. This feature enhances the system's ability to monitor usage, analyze trends, and improve performance over time.
+
+#### Implementation Details
+
+1. **Database Insertion Function**:
+   ```python
+   def insert_to_db(query, location, query_types, bot_response):
+       # Connects to the database and inserts chat log entry
+   ```
+
+2. **Data Logged**:
+   - Timestamp
+   - User's location (if available)
+   - User's query
+   - Query categories
+   - Bot's response
+
+3. **Background Task Execution**:
+   ```python
+   @app.post("/chat/")
+   def chatbot(request: QueryRequest, background_tasks: BackgroundTasks):
+       # ... (chat processing logic)
+       background_tasks.add_task(insert_to_db, query, location, query_types, bot_response)
+   ```
+
+4. **Database Schema** (inferred):
+   ```sql
+   CREATE TABLE logs (
+       time TIMESTAMP,
+       location TEXT,
+       query TEXT,
+       category TEXT,
+       response TEXT
+   );
+   ```
+
+This logging system operates asynchronously, ensuring that the chat response is not delayed by database operations.
+
 ### Scalability & Future Extensions
 
 To scale the system:

@@ -1,10 +1,11 @@
 import os
+from datetime import datetime
 import wikipedia
 import psycopg2
 from openai import OpenAI
 from dotenv import load_dotenv, find_dotenv
 import uvicorn
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, BackgroundTasks
 from pydantic import BaseModel
 from typing import Optional
 from langchain.tools import Tool
@@ -60,6 +61,28 @@ def update_chat_history(user_query: str, bot_response: str):
         # Archive older history by keeping only the last 10 interactions
         if len(chat_history) > 10:
             chat_history = chat_history[-10:]
+
+def insert_to_db(query, location, query_types, bot_response):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        insert_query = """
+        INSERT INTO logs (time, location, query, category, response)
+        VALUES (%s, %s, %s, %s, %s)
+        """
+        cursor.execute(insert_query, (datetime.now(), location, query, ", ".join(query_types), bot_response))
+
+        conn.commit()
+        cursor.close()
+        conn.close()
+    except Exception as e:
+        print(f"Error inserting into database: {e}")
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 def load_and_store_pdf():
     """Loads the predefined PDF, extracts text, and stores embeddings in vector DB."""
@@ -246,7 +269,7 @@ def is_follow_up_query(query, recent_history):
 
 
 @app.post("/chat/")
-def chatbot(request: QueryRequest):
+def chatbot(request: QueryRequest, background_tasks: BackgroundTasks):
 
     query = request.query.lower()
     recent_history = get_recent_history(max_entries=2, max_length=256)
@@ -302,6 +325,9 @@ def chatbot(request: QueryRequest):
             bot_response = "I can only answer food-related or restaurant queries."
 
         update_chat_history(query, bot_response)
+
+    # Insert into database in background
+    background_tasks.add_task(insert_to_db, query, location, query_types, bot_response)
 
     return {"response": bot_response}
 
