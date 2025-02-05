@@ -1,4 +1,4 @@
-# MenuData AI Chatbot
+# MenuData AI Chatbot 🍽️
 
 ## Table of Contents
 - [Overview](#overview)
