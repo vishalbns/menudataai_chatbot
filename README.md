@@ -88,6 +88,11 @@ The system employs one-shot prompt engineering techniques to guide the LLM in va
 2. **Query Classification**: A prompt with examples helps the LLM categorize queries accurately.
 3. **Follow-up Detection**: A specialized prompt determines if a query is a follow-up to previous conversation.
 
+
+## Restaurant Menu Table in PostgreSQL Database
+
+![SQL Table](images/maintablesql.png)
+
 ### Response Merging
 
 The system combines information from multiple sources to generate comprehensive responses:
@@ -185,6 +190,11 @@ The Chatbot also implements a background task system for logging chat interactio
    );
    ```
 
+## Chat Logs stored in PostgreSQL Database
+
+![Logs](images/logs.png)
+
+
 This logging system operates asynchronously, ensuring that the chat response is not delayed by database operations.
 
 ### Scalability & Future Extensions
@@ -204,10 +214,9 @@ Future improvements:
 
 ### Sample Queries
 
-1. "What are the top-rated Italian restaurants in San Francisco?"
-2. "Tell me about the history of sushi."
-3. "What are the trending ingredients in vegetarian dishes this year?"
-4. "Compare the average prices of Mexican and Chinese restaurants in the city."
+![Example 1](images/example1.png)
+
+![Example 2](images/example2.png)
 
 ### Additional Features
 
