@@ -16,6 +16,12 @@
 
 MenuData AI Chatbot is an intelligent assistant designed to provide information about restaurants, menus, food history, and more. It combines a powerful backend with a user-friendly frontend to deliver a seamless chatbot experience.
 
+## Architecture Flow
+
+![Architecture Flow](images/flow.png)
+
+*Figure: High-level architecture flow of MenuData AI Chatbot.*
+
 ## Technical Architecture
 
 The system consists of two main components:
