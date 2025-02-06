@@ -1,0 +1,15 @@
+fastapi==0.115.8
+geocoder==1.38.1
+langchain==0.3.17
+langchain-openai==0.3.3
+langchain-text-splitters==0.3.5
+openai==1.61.1
+psycopg2==2.9.10
+python-dotenv==1.0.1
+pydantic==2.10.6
+requests==2.32.3
+streamlit==1.41.1
+uvicorn==0.34.0
+wikipedia-api==1.4.0
+pypdf2==5.2.0
+docarray==0.40.0
