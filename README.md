@@ -1,6 +1,6 @@
 # MenuData AI Chatbot 🍽️
 
-**I intentionally did not use LangChain Agents and Tools, and CrewAI because I wanted to write the functions of task identification and tool calling by myself. Using CrewAI would've made the code modularized and improved the latency, but this project is intended to reduce the libraries' dependencies and LLM API calling.\n
+**I intentionally did not use LangChain Agents and Tools, and CrewAI because I wanted to write the functions of task identification and tool calling by myself. Using CrewAI would've made the code modularized and improved the latency, but this project is intended to reduce the libraries' dependencies and LLM API calling.<br>
 My CrewAI projects are here - https://github.com/vishalbns/crew-ai-multi-agent-projects**
 
 ## Table of Contents
